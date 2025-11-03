@@ -1,12 +1,34 @@
-const mongoose  = require("mongoose")
+const mongoose = require("mongoose")
 
-module.exports = ()=>{
-   
-    mongoose.connect(process.env.MONGODB_URL).then((res)=>{
-        console.log("Connected to the DB")
-    }).catch((err)=>{
-        console.log("Error while connecting to the DB", err.message)
-    }).finally(()=>{
-        console.log("DB Process completed.")
-    }) 
+const MONGO_URI = process.env.MONGODB_URL
+
+
+const databaseConnect  = ()=>{
+    mongoose.connect(MONGO_URI)
+    .then((res) => {
+        console.log("Database connected successfully");
+    })
+    .catch((err) => {
+        console.log("Error connecting to the database...")
+    })
+
+
+mongoose.connection.on("error", (err) => {
+    console.log("Error occured",err.message);
+})
+
 }
+function getCollection(COLLECTION) {
+
+    if (mongoose.models[COLLECTION]) {
+        return mongoose.model(COLLECTION);
+    }
+
+    return mongoose.model(
+        COLLECTION,
+        new mongoose.Schema({}, { strict: false }),
+        COLLECTION
+    );
+}
+
+module.exports = {databaseConnect,getCollection}

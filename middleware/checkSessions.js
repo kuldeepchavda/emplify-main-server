@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const {getJWT, verifyJWT} = require("../config/JWT_opetations")
 // check and response 
 const verifySessions = async (req, res, next) => {
-  const token  = req.cookies.token;
+  const token  = req.cookies.user_token;
   if(!token){
     return res.status(402).json({verified:false, message:"token not provided!"})
   }
@@ -21,7 +21,7 @@ const verifySessions = async (req, res, next) => {
 };
 // check and let go if not valid 
 const validateSessions = async (req, res, next) => {
-  const token  = req.cookies.token;
+  const token  = req.cookies.user_token;
 
   if(!token){
     return res.status(402).json({verified:false, message:"token not provided!"})

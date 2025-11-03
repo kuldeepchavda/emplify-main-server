@@ -1,12 +1,12 @@
-const Education  = require("../../Models/user/Education");
-/**
- * Create a new education entry
- */
-  const createEducation = async (req, res) => {
+const dbUtils = require("../../config/DatabaseConfig")
+const Education = dbUtils.getCollection(process.env.EDUCATION_DATABASE);
+
+ 
+const createEducation = async (req, res) => {
   try {
     const userId = req.user._id;
     const { school, degree, field, startDate, endDate, description } = req.body;
-console.log(req.body);
+    console.log(req.body);
     const education = await Education.create({
       userId,
       school,
@@ -23,11 +23,11 @@ console.log(req.body);
   }
 };
 
-  const getEducationById = async (req, res) => {
+const getEducationById = async (req, res) => {
   try {
     const userId = req.user._id;
-    const {id} = req.params;
-    const educations = await Education.findOne({ _id:id });
+    const { id } = req.params;
+    const educations = await Education.findOne({ _id: id });
     res.json(educations);
   } catch (error) {
     res.status(500).json({ message: "Error fetching educations", error: error.message });
@@ -35,10 +35,8 @@ console.log(req.body);
 };
 
 
-/**
- * Get all education entries of current user
- */
-  const getEducations = async (req, res) => {
+ 
+const getEducations = async (req, res) => {
   try {
 
     const userId = req.user._id;
@@ -50,10 +48,7 @@ console.log(req.body);
   }
 };
 
-/**
- * Update an education entry
- */
-  const updateEducation = async (req, res) => {
+const updateEducation = async (req, res) => {
   try {
     const userId = req.user._id;
     const { id } = req.params;
@@ -78,7 +73,7 @@ console.log(req.body);
 /**
  * Delete an education entry
  */
-  const deleteEducation = async (req, res) => {
+const deleteEducation = async (req, res) => {
   try {
     const userId = req.user._id;
     const { id } = req.params;
@@ -98,7 +93,7 @@ console.log(req.body);
 /**
  * Insert many education entries at once
  */
-  const insertManyEducations = async (req, res) => {
+const insertManyEducations = async (req, res) => {
   try {
     const userId = req.user._id;
     const educations = req.body.map(edu => ({ ...edu, userId }));
@@ -112,7 +107,7 @@ console.log(req.body);
 };
 
 
-module.exports =  {
+module.exports = {
   createEducation,
   getEducations,
   updateEducation,

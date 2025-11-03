@@ -1,4 +1,5 @@
-const  User =  require("../../Models/user/Users")
+const dbUtils = require("../../config/DatabaseConfig")
+const User = dbUtils.getCollection(process.env.USERS_DATABASE);
  
 /**
  * Get current user profile (from req.user)

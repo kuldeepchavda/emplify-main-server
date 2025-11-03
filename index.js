@@ -4,7 +4,6 @@ const cors = require("cors");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 // ROUTES
-const adminAuthRoutes = require("./routes/admin.authenticate.routes.js")
 const userAuthRoutes = require("./routes/user.authentication.routes.js")
 const jobRoutes = require("./routes/jobs.routes.js");
 const ExperienceRoutes = require("./routes/users.routers/experience.router.js")
@@ -12,6 +11,7 @@ const {validateSessions} = require("./middleware/checkSessions.js");
 const userRoutes = require("./routes/users.routers/users.routes.js")
 const EducationRoutes = require("./routes/users.routers/education.router.js")
 const JobApplicationRoutes = require("./routes/jobApplication.router.js")
+const dbUtils = require("./config/DatabaseConfig")
 // APP INITIATION 
 const app = express()
 
@@ -23,17 +23,18 @@ const corsOptions = {
   methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
   credentials: true,
 };
+
+dbUtils.databaseConnect();
 app.use(cors(corsOptions));
 
 
-require("./config/DatabaseConfig")();
 require("./config/passPortConfig")(passport)
 
 // PASSPORT CONFIG  
 app.use(passport.initialize());
 
 // ROUTES 
-app.use("/auth/admin", adminAuthRoutes); 
+
 app.use("/auth/user", userAuthRoutes);
 app.use(validateSessions);
 app.use("/user",userRoutes);
@@ -44,15 +45,15 @@ app.use("/apply",JobApplicationRoutes);
 
 
 // START SERVER
-const port = 5000;
+const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`Server running at ${process.env.PORT}.`)
+  console.log(`Server running at ${port}.`)
 });
 
-console.log(1)
-console.log(2)
-console.log(3)
-console.log(4)
-console.log(5)
-console.log(6)
-console.log(7)
+console.log(1);
+console.log(2);
+console.log(3);
+console.log(4);
+console.log(5);
+console.log(6);
+console.log(7);

@@ -1,4 +1,5 @@
-const Job = require("../Models/Job.js");
+const dbUtils = require("../config/DatabaseConfig")
+const Job = dbUtils.getCollection(process.env.JOBS_DATABASE);
 
 exports.createJob = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ exports.createJob = async (req, res) => {
 
 exports.getJobs = async (req, res) => {
   try {
+    console.log(process.env.JOBS_DATABASE);
     const jobs = await Job.find();
     const jobCounts = await Job.countDocuments();
     res.status(200).json({ success: true, data: { jobs, counts: jobCounts } });

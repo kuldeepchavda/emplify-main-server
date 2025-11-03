@@ -1,4 +1,6 @@
-const Experience  = require("../../Models/user/Experience");
+const dbUtils = require("../../config/DatabaseConfig")
+const Experience = dbUtils.getCollection(process.env.EXPERIENCE_DATABASE);
+
 /**
  * Create a new experience
  */

@@ -9,6 +9,5 @@ router.post("/many", jobController.createManyJobs);
 router.get("/", jobController.getJobs);
 router.get("/:id", jobController.getJobById);
 router.put("/:id", jobController.updateJob);
-router.delete("/:id", jobController.deleteJob);
-console.log("wprking")
+router.delete("/:id", jobController.deleteJob); 
 module.exports = router;

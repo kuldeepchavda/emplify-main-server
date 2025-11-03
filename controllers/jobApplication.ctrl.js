@@ -1,8 +1,11 @@
-const Job = require("../Models/Job")
-const User = require("../Models/user/Users")
-const Education = require("../Models/user/Education")
-const Experience = require("../Models/user/Experience")
-const Application = require("../Models/JobApplication")
+const dbUtils = require("../config/DatabaseConfig")
+
+// const Education = dbUtils.getCollection("Education");
+const Job = dbUtils.getCollection(process.env.JOBS_DATABASE);
+const User =  dbUtils.getCollection(process.env.USERS_DATABASE);
+const Education =  dbUtils.getCollection(process.env.EDUCATION_DATABASE);
+const Experience =  dbUtils.getCollection(process.env.EXPERIENCE_DATABASE);
+const Application =  dbUtils.getCollection(process.env.JOB_APPLICATION_DATABASE);
 
 
 exports.applyForJob = async (req, res) => {
@@ -14,7 +17,7 @@ exports.applyForJob = async (req, res) => {
         const user = await User.findById(userId);
         // console.log(job, user);
 
-        if (!user.completeProfile){
+        if (!user.email || !user.fullName || !user.phone){
             console.log("not completed profile");
             return res.status(404).json({ msg: "Please complete profile creation." });
         }

@@ -1,3 +1,4 @@
+const getCollection = require("../../config/DatabaseConfig");
 const mongoose = require("mongoose")
 const educationSchema = new mongoose.Schema(
     {
@@ -12,4 +13,5 @@ const educationSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
 module.exports = mongoose.model("Education", educationSchema);
